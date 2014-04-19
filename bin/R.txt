@@ -69,8 +69,12 @@ int id satellite 0x7f050002
 int id terrain 0x7f050003
 int integer google_play_services_version 0x7f070000
 int layout activity_main 0x7f030000
+<<<<<<< HEAD
 int layout basic_demo 0x7f030001
 int layout map_fragment 0x7f030002
+=======
+int layout map_fragment 0x7f030001
+>>>>>>> 175fe7a504bb9d376b6192e095b424853b9531d7
 int menu main 0x7f0a0000
 int string action_gotomap 0x7f06001e
 int string action_settings 0x7f06001d
