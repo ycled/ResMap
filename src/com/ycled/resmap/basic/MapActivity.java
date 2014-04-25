@@ -1,16 +1,8 @@
 package com.ycled.resmap.basic;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -22,26 +14,32 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.ycled.resmap.R;
 import com.ycled.resmap.api.GooglePlaceApiHelper;
+import com.ycled.resmap.api.SearchRestaurantsTask;
+import com.ycled.resmap.listener.SearchRestaurantsTaskListener;
 import com.ycled.resmap.model.Restaurant;
 
-public class MapActivity extends FragmentActivity {
+public class MapActivity extends FragmentActivity implements
+		SearchRestaurantsTaskListener {
 
-	private static final String TAG = "MapActivity::";
-	private ArrayList<Restaurant> mRestaurants;
-	private static final String SYDNEY_LOCATION = "-33.867, 151.206";
-	
-	/**
-	 * Note that this may be null if the Google Play services APK is not
-	 * available.
-	 */
+	private static final String TAG = "MapActivity";
+
+	// private static final String SYDNEY_LOCATION = "-33.867, 151.206";
+
+	private SearchRestaurantsTask mSearchRestTask;
 	private GoogleMap mMap;
+	private ArrayList<Restaurant> mRestaurants;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map_fragment);
 
+		mSearchRestTask = new SearchRestaurantsTask(this);
+
 		setUpMapIfNeeded();
+
+		// search the nearby place
+		searchNearbyRestaurants();
 	}
 
 	@Override
@@ -101,18 +99,12 @@ public class MapActivity extends FragmentActivity {
 				.snippet("The most populous city in Australia.")
 				.position(sydney));
 
-		// TODO:: search the nearby place
-		searchNearbyPlace();
-		
-		// TODO:: add marker
-		addRestMarker();
 	}
 
 	/**
-	 * //TODO:: 
-	 * search the nearby place
+	 * //TODO:: search the nearby place
 	 */
-	private void searchNearbyPlace() {
+	private void searchNearbyRestaurants() {
 
 		Location mCenter = new Location("-33.867, 151.206");
 		int radius = 1000;
@@ -122,74 +114,44 @@ public class MapActivity extends FragmentActivity {
 				mCenter, radius, sensor);
 		if (searchUrl != null) {
 			Log.d(TAG, "searchUrl=>" + searchUrl);
-			String[] searchUrlArr = new String[] { searchUrl };
-
-			SearchGooglePlaceTask task = new SearchGooglePlaceTask();
-			task.execute(searchUrlArr);
+			mSearchRestTask.execute(searchUrl);
 		} else {
 			Log.d(TAG, "searchUrl=>" + null);
 		}
 
 	}
-	
-	private void addRestMarker() {
-		
-		if(mRestaurants != null) {
-			
-			for(Restaurant mRest : mRestaurants) {
-				
-				
-				String mTitle = mRest.getName();
-				String mAddress = mRest.getAddress();
-				LatLng mLatLng = mRest.getLocation();
-				
-				Log.d(TAG, "marker, loc=>" + mLatLng.toString());
-				
-				mMap.addMarker(new MarkerOptions().title(mTitle)
-						.snippet(mAddress)
-						.position(mLatLng));
-			}
+
+	/**
+	 * This method is called after completion of asynctask
+	 */
+	@Override
+	public void onTaskComplete(ArrayList<Restaurant> list) {
+		mRestaurants = list;
+
+		// TODO:: add marker
+		if (mRestaurants == null || mRestaurants.isEmpty()) {
+			Log.d(TAG, "mRestaurants rst=>null");
+		} else {
+			addRestMarkerOnMap();
 		}
-		
 
 	}
 
 	/**
-	 * 
-	 * AsyncTask to send HTTP request
-	 * 
+	 * add marker on the map to show the location of searched result
 	 */
-	private class SearchGooglePlaceTask extends AsyncTask<String, Void, String> {
+	private void addRestMarkerOnMap() {
 
-		@Override
-		protected String doInBackground(String... urls) {
-			String response = "";
-			for (String url : urls) {
-				DefaultHttpClient client = new DefaultHttpClient();
-				HttpGet httpGet = new HttpGet(url);
-				try {
-					HttpResponse execute = client.execute(httpGet);
-					InputStream content = execute.getEntity().getContent();
+		for (Restaurant mRest : mRestaurants) {
 
-					BufferedReader buffer = new BufferedReader(
-							new InputStreamReader(content));
-					String s = "";
-					while ((s = buffer.readLine()) != null) {
-						response += s;
-					}
+			String mTitle = mRest.getName();
+			String mAddress = mRest.getAddress();
+			LatLng mLatLng = mRest.getLocation();
 
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			return response;
-		}
+			Log.d(TAG, "marker, loc=>" + mLatLng.toString());
 
-		@Override
-		protected void onPostExecute(String result) {
-			// textView.setText(result);
-			Log.d(TAG, "search rst=>" + result);
-			mRestaurants = GooglePlaceApiHelper.getRestaurantsFromJSON(result);
+			mMap.addMarker(new MarkerOptions().title(mTitle).snippet(mAddress)
+					.position(mLatLng));
 		}
 
 	}

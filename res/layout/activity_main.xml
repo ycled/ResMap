@@ -3,9 +3,6 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
     tools:context="com.ycled.resmap.basic.MainActivity"
-=======
-    tools:context="com.example.resmap.MainActivity"
->>>>>>> 175fe7a504bb9d376b6192e095b424853b9531d7
+
     tools:ignore="MergeRootFrame" />

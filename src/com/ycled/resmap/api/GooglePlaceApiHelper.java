@@ -9,6 +9,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.ycled.resmap.listener.SearchRestaurantsTaskListener;
 import com.ycled.resmap.model.Restaurant;
 
 public class GooglePlaceApiHelper {
@@ -17,14 +18,17 @@ public class GooglePlaceApiHelper {
 	private static final String GOOGLE_API_KEY = "AIzaSyDOZhFs0gzKKDf77LtQNOJz7BjTbgY5wnY";
 	private static final String GOOGLE_PLACE_API_BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 	private static final String GOOGLE_PLACE_API_TYPES = "food|restaurant|cafe";
+	
+	
+	SearchRestaurantsTaskListener mGetRestaurantListListener;
+	
+	
+	public void setRestaurantListFromGooglePlaceAPIListener(SearchRestaurantsTaskListener listener){
+		mGetRestaurantListListener = listener;
+	}
 
 	/**
 	 * Format the URL to access the Google place API.
-	 * 
-	 * @param GoogleAPIKey
-	 * @param center	=>	the center of the search
-	 * @param radius	=>  the radius of the search circle
-	 * @param sensor	=>	whether the result is read from a sensor
 	 * @return the formatted String
 	 */
 	public static String formatGooglePlaceApiSearchUrl(Location center,
@@ -46,11 +50,8 @@ public class GooglePlaceApiHelper {
 		// return null;
 		//
 		// TODO:
-		return GOOGLE_PLACE_API_BASE_URL
-				+ "location=-33.867,151.206"
-				+ "&radius=500"
-				+ "&types=restaurant"
-				+ "&sensor=false"
+		return GOOGLE_PLACE_API_BASE_URL + "location=-33.867,151.206"
+				+ "&radius=500" + "&types=restaurant" + "&sensor=false"
 				+ "&key=" + GOOGLE_API_KEY;
 
 	}
@@ -61,36 +62,37 @@ public class GooglePlaceApiHelper {
 		try {
 			JSONObject rstJsonObj = new JSONObject(str);
 			JSONArray resList = rstJsonObj.getJSONArray("results");
-			
-			if(resList != null){
-				//TODO::size, time 
-				for(int i=0; i<5; i++){
+
+			if (resList != null) {
+				// TODO::size, time
+				for (int i = 0; i < 5; i++) {
 					Restaurant mRestaurant = new Restaurant();
 					JSONObject restObj = resList.getJSONObject(i);
-					//TODO::set all attr
+					// TODO::set all attr
 					mRestaurant.setName(restObj.getString("name"));
 					mRestaurant.setAddress(restObj.getString("vicinity"));
-					
+
 					JSONObject geoObj = restObj.getJSONObject("geometry");
 					JSONObject locObj = geoObj.getJSONObject("location");
 					double lat = locObj.getDouble("lat");
 					double lng = locObj.getDouble("lng");
-					LatLng location = new LatLng(lat, lng); 
+					LatLng location = new LatLng(lat, lng);
 					mRestaurant.setLocation(location);
-					
-					
+
 					mRestaurants.add(mRestaurant);
-					
+
 				}
 			}
-			
+
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}
-		
-		//Log.d(TAG, "mRestaurants.get(1).getname=>" + mRestaurants.get(1).getName());
+
+		// Log.d(TAG, "mRestaurants.get(1).getname=>" +
+		// mRestaurants.get(1).getName());
 
 		return mRestaurants;
 	}
+
 
 }

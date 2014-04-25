@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-<<<<<<< HEAD
     package="com.ycled.resmap"
-=======
-    package="com.example.resmap"
->>>>>>> 175fe7a504bb9d376b6192e095b424853b9531d7
+
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -32,21 +29,14 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-<<<<<<< HEAD
-            android:value="AIzaSyB92oYXQVnEkwCJ20LSyz8XPvMv0T-pJdA" />
-=======
-            android:value="AIzaSyA2h4O2_pUHEmg9zZ_TnY6zmZRiRRtqjjs" />
->>>>>>> 175fe7a504bb9d376b6192e095b424853b9531d7
+            android:value="AIzaSyBVjdBRwe-8rYzqiHcD05RmtGXYwshvafA" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
-<<<<<<< HEAD
             android:name="com.ycled.resmap.basic.MainActivity"
-=======
-            android:name="com.example.resmap.MainActivity"
->>>>>>> 175fe7a504bb9d376b6192e095b424853b9531d7
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,16 +46,8 @@
         </activity>
         
          <activity
-<<<<<<< HEAD
             android:name="com.ycled.resmap.basic.MapActivity"
             android:label="@string/map_activity_label" />
     </application>
 
 </manifest>
-=======
-            android:name=".MapActivity"
-            android:label="@string/map_activity_label" />
-    </application>
-
-</manifest>
->>>>>>> 175fe7a504bb9d376b6192e095b424853b9531d7
