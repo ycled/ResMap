@@ -31,11 +31,11 @@ public class MainActivity extends Activity {
 		if (id == R.id.action_gotomap) {
 			startActivity(new Intent(this, MapActivity.class));
 			return true;
+		} else if (id == R.id.action_gotolist) {
+			startActivity(new Intent(this, RestListActivity.class));
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	
-	
-	
 }

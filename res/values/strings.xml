@@ -4,8 +4,13 @@
     <string name="app_name">ResMap</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="action_gotomap">Map</string>
     
+    
+    <string name="action_gotomap">Map</string>
+	<string name="action_gotolist">List</string>
+	
     <string name="map_activity_label">Map Activity</string>
+    <string name="restlist_activity_label">List Activity</string>
+    <string name="restdetail_activity_label">Detail Activity</string>
 
 </resources>

@@ -48,6 +48,12 @@
          <activity
             android:name="com.ycled.resmap.basic.MapActivity"
             android:label="@string/map_activity_label" />
+         <activity
+            android:name="com.ycled.resmap.basic.RestListActivity"
+            android:label="@string/restlist_activity_label" />
+         <activity
+            android:name="com.ycled.resmap.basic.RestDetailActivity"
+            android:label="@string/restdetail_activity_label" />
     </application>
 
 </manifest>
