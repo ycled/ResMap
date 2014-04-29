@@ -17,7 +17,8 @@ public class GooglePlaceApiHelper {
 	private static final String TAG = "GooglePlaceApiHelper";
 	private static final String GOOGLE_API_KEY = "AIzaSyDOZhFs0gzKKDf77LtQNOJz7BjTbgY5wnY";
 	private static final String GOOGLE_PLACE_API_BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
-	private static final String GOOGLE_PLACE_API_TYPES = "food|restaurant|cafe";
+	//private static final String GOOGLE_PLACE_API_TYPES = "food|restaurant|cafe";
+	private static final String GOOGLE_PLACE_API_TYPES = "food";
 	
 	
 	SearchRestaurantsTaskListener mGetRestaurantListListener;
@@ -53,8 +54,24 @@ public class GooglePlaceApiHelper {
 		return GOOGLE_PLACE_API_BASE_URL + "location=-33.867,151.206"
 				+ "&radius=500" + "&types=restaurant" + "&sensor=false"
 				+ "&key=" + GOOGLE_API_KEY;
+		
+
 
 	}
+	
+	public static String formatGooglePlaceApiSearchUrl(double lat, double lng,
+			int radius, boolean sensor) {
+	
+		return GOOGLE_PLACE_API_BASE_URL + 
+				"location=" + String.valueOf(lat) + "," + String.valueOf(lng)
+				+ "&radius=" + String.valueOf(radius)
+				+ "&types=" + GOOGLE_PLACE_API_TYPES 
+				+ "&sensor=" + String.valueOf(sensor)
+				+ "&key=" + GOOGLE_API_KEY;
+
+	}
+	
+	
 
 	public static ArrayList<Restaurant> getRestaurantsFromJSON(String str) {
 		ArrayList<Restaurant> mRestaurants = new ArrayList<Restaurant>();

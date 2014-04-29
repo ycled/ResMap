@@ -21,6 +21,7 @@ import com.ycled.resmap.api.GooglePlaceApiHelper;
 import com.ycled.resmap.api.SearchRestaurantsTask;
 import com.ycled.resmap.listener.SearchRestaurantsTaskListener;
 import com.ycled.resmap.model.Restaurant;
+import com.ycled.resmap.util.GPSManager;
 
 public class RestListActivity extends Activity implements
 		SearchRestaurantsTaskListener {
@@ -30,6 +31,7 @@ public class RestListActivity extends Activity implements
 	private ListView lv;
 	ArrayAdapter<String> adapter;
 	EditText inputSearch;
+	GPSManager mGPSManager;
 
 	// ArrayList for Listview
 	ArrayList<HashMap<String, String>> productList;
@@ -45,6 +47,10 @@ public class RestListActivity extends Activity implements
 
 		mSearchRestTask = new SearchRestaurantsTask(this);
 
+		// GPS: current location
+		mGPSManager = new GPSManager(RestListActivity.this);
+		
+		
 
 
 		lv = (ListView) findViewById(R.id.list_view);
@@ -108,19 +114,17 @@ public class RestListActivity extends Activity implements
 	 */
 	private void searchNearbyRestaurants() {
 
-		Location mCenter = new Location("-33.867, 151.206");
+		//Location mCenter = new Location(mGPSManager.getLatitude() + "," + mGPSManager.getLongitude());
 		int radius = 1000;
 		boolean sensor = false;
 
 		String searchUrl = GooglePlaceApiHelper.formatGooglePlaceApiSearchUrl(
-				mCenter, radius, sensor);
-		if (searchUrl != null) {
-			Log.d(TAG, "searchUrl=>" + searchUrl);
-			mSearchRestTask.execute(searchUrl);
-		} else {
-			Log.d(TAG, "searchUrl=>" + null);
-		}
-
+				mGPSManager.getLatitude(), mGPSManager.getLongitude(), radius, sensor);
+		
+		
+		Log.d(TAG, "searchUrl=>" + searchUrl);
+		mSearchRestTask.execute(searchUrl);
+		
 	}
 
 	/**
