@@ -20,7 +20,7 @@ import com.ycled.resmap.model.Restaurant;
 public class GooglePlaceApiHelper {
 
 	private static final String TAG = "GooglePlaceApiHelper";
-	private static final String GOOGLE_API_KEY = "AIzaSyA-KpnCbqazJ8hAIZ-zXy8Kr0X8Qqv7U7Y";
+	private static final String GOOGLE_API_KEY = "GOOGLE_API_KEY";
 	private static final String GOOGLE_PLACE_API_BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 	//private static final String GOOGLE_PLACE_API_TYPES = "food|restaurant|cafe";
 	private static final String GOOGLE_PLACE_API_TYPES = "food";
