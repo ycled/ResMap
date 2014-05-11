@@ -14,18 +14,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.ycled.resmap.R;
 import com.ycled.resmap.api.GooglePlaceApiHelper;
-import com.ycled.resmap.api.SearchRestaurantsTask;
-import com.ycled.resmap.listener.SearchRestaurantsTaskListener;
+import com.ycled.resmap.api.PlaceNearbySearchTask;
 import com.ycled.resmap.model.Restaurant;
 
-public class MapActivity extends FragmentActivity implements
-		SearchRestaurantsTaskListener {
+public class MapActivity extends FragmentActivity{
 
 	private static final String TAG = "MapActivity";
 
 	// private static final String SYDNEY_LOCATION = "-33.867, 151.206";
 
-	private SearchRestaurantsTask mSearchRestTask;
+	private PlaceNearbySearchTask mSearchRestTask;
 	private GoogleMap mMap;
 	private ArrayList<Restaurant> mRestaurants;
 
@@ -34,7 +32,7 @@ public class MapActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map_fragment);
 
-		mSearchRestTask = new SearchRestaurantsTask(this);
+		mSearchRestTask = new PlaceNearbySearchTask(this);
 
 		setUpMapIfNeeded();
 
@@ -121,21 +119,8 @@ public class MapActivity extends FragmentActivity implements
 
 	}
 
-	/**
-	 * This method is called after completion of asynctask
-	 */
-	@Override
-	public void onTaskComplete(ArrayList<Restaurant> list) {
-		mRestaurants = list;
+	
 
-		// TODO:: add marker
-		if (mRestaurants == null || mRestaurants.isEmpty()) {
-			Log.d(TAG, "mRestaurants rst=>null");
-		} else {
-			addRestMarkerOnMap();
-		}
-
-	}
 
 	/**
 	 * add marker on the map to show the location of searched result

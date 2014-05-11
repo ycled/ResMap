@@ -13,19 +13,20 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ycled.resmap.listener.SearchRestaurantsTaskListener;
+import com.ycled.resmap.listener.PlaceNearbySearchTaskListener;
+import com.ycled.resmap.model.NearbyPlaceList;
 import com.ycled.resmap.model.Restaurant;
 
-public class SearchRestaurantsTask extends AsyncTask<String, Void, String> {
+public class PlaceNearbySearchTask extends AsyncTask<String, Void, String> {
 
-	private static final String TAG = "SearchRestaurantsTask";
+	private static final String TAG = "PlaceNearbySearchTask";
 
 	private Activity activity;
-	private SearchRestaurantsTaskListener listener;
+	private PlaceNearbySearchTaskListener listener;
 
-	public SearchRestaurantsTask(Activity activity) {
+	public PlaceNearbySearchTask(Activity activity) {
 		this.activity = activity;
-		this.listener = (SearchRestaurantsTaskListener) activity;
+		this.listener = (PlaceNearbySearchTaskListener) activity;
 	}
 
 	@Override
@@ -54,13 +55,10 @@ public class SearchRestaurantsTask extends AsyncTask<String, Void, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
-		Log.d(TAG, "search rst=>" + result);
+		Log.d(TAG, "resultt=>" + result);
 
 		// decode json
-		ArrayList<Restaurant> mRestaurants = GooglePlaceApiHelper
-				.getRestaurantsFromJSON(result);
-
-		// call method from here
-		listener.onTaskComplete(mRestaurants);
+		NearbyPlaceList list = GooglePlaceApiHelper.getPlacesFromJSON(result);
+		listener.onPlaceNearbySearchTaskComplete(list);
 	}
 }

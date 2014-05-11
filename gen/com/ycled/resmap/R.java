@@ -225,11 +225,11 @@ containing a value of this type.
         public static final int action_gotolist=0x7f05000f;
         public static final int action_gotomap=0x7f05000e;
         public static final int action_settings=0x7f05000d;
+        public static final int autoCompleteInputSearch=0x7f050006;
         public static final int btn_search=0x7f050007;
         public static final int container=0x7f050009;
         public static final int hybrid=0x7f050004;
         public static final int icon=0x7f05000b;
-        public static final int inputSearch=0x7f050006;
         public static final int label=0x7f05000c;
         public static final int list_view=0x7f050008;
         public static final int map=0x7f05000a;

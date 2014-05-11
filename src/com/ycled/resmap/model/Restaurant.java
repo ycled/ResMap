@@ -6,6 +6,8 @@ import com.google.android.gms.maps.model.LatLng;
  * Model class representation of a single restaurant
  */
 public class Restaurant {
+	
+	
 	private String name, address, reference, photoUrl;
 	private LatLng location;
 	// private Photo thumbNail;

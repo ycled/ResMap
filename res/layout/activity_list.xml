@@ -11,16 +11,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/inputSearch"
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteInputSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Search ..."
-            android:inputType="textVisiblePassword" >
+            android:text="AutoCompleteTextView" >
 
             <requestFocus />
-        </EditText>
+        </AutoCompleteTextView>
 
         <Button
             android:id="@+id/btn_search"
